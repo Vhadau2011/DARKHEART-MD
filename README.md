@@ -1,12 +1,9 @@
-<p align="center">
-  <img src="https://files.catbox.moe/1040li.jpg" alt="DARKHEART-MD Banner" width="100%">
-</p>
 
 # 🖤 DARKHEART-MD
 
-╔═════════════════════╗  
-║       dⱥrk hɇⱥrt's      ║  
-╚═════════════════════╝  
+<p align="center">
+  <img src="https://files.catbox.moe/yhi316.jpg" alt="DARKHEART-MD Banner" width="100%">
+</p>  
 
 ---
 
