@@ -1,5 +1,5 @@
 
-# 🖤 DARKHEART-MD
+# 🖤 BLUEBOT-MD
 
 <p align="center">
   <img src="https://files.catbox.moe/yhi316.jpg" alt="DARKHEART-MD Banner" width="100%">
@@ -9,7 +9,7 @@
 
 ## 👑 About This Repository
 
-**DARKHEART-MD** is a royal-crafted project built with precision, discipline, and elite standards.
+**BLUEBOT-MD** is a royal-crafted project built with precision, discipline, and elite standards.
 
 This repository was **created and maintained by the**:
 
@@ -46,7 +46,7 @@ Join the official **Royal Channel** for updates, announcements, and community ac
 ## 📜 Credits
 
 - 👑 Built by: **⨺⃝Х⨺⃝Х̶̿̀͊̍̈́͑̓̈́̃̆́ ⁶⁶⁶ Team**
-- 🖤 Project: **DARKHEART-MD**
+- 🖤 Project: **BLUEBOT-MD**
 - ⚔️ Code with purpose. Build with honor.
 
 ---
@@ -56,7 +56,7 @@ Join the official **Royal Channel** for updates, announcements, and community ac
 Unauthorized redistribution or misrepresentation of this project is not tolerated.  
 Respect the crown. Respect the craft.
 
-> ⚠️⚠️⚠️ warning modifying the repo is not allowed as it can lead to a permenet ban from are bots best opten is to join are community or channel and follow the **DARKHEART-MD** rules....do not take credit fore the things you dint work on
+> ⚠️⚠️⚠️ warning modifying the repo is not allowed as it can lead to a permenet ban from are bots best opten is to join are community or channel and follow the **BLUEBOT-MD** rules....do not take credit fore the things you dint work on
 
 ---
 
