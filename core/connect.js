@@ -19,7 +19,7 @@ async function connectBot() {
         auth: state,
         logger: Pino({ level: "silent" }),
         printQRInTerminal: true,
-        browser: ["DARKHEART-MD", "Chrome", "1.0.0"]
+        browser: ["BLUEBOT-MD", "Chrome", "1.0.0"]
     })
 
     // Save credentials
@@ -41,7 +41,7 @@ async function connectBot() {
         }
 
         if (connection === "open") {
-            console.log("✅ DARKHEART-MD connected to WhatsApp")
+            console.log("✅ BLUEBOT-MD connected to WhatsApp")
         }
     })
 
