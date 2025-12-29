@@ -1,17 +1,38 @@
 const fs = require("fs")
 const path = require("path")
 
+// Load commands ONCE
+const commands = new Map()
+const commandDir = path.join(__dirname, "../cmds")
+
+for (const file of fs.readdirSync(commandDir)) {
+    if (!file.endsWith(".js")) continue
+
+    const exported = require(path.join(commandDir, file))
+    const list = Array.isArray(exported) ? exported : [exported]
+
+    for (const cmd of list) {
+        commands.set(cmd.caller, cmd)
+        if (cmd.aliases) {
+            for (const alias of cmd.aliases) {
+                commands.set(alias, cmd)
+            }
+        }
+    }
+}
+
 module.exports = async (sock, msg) => {
     try {
+        if (!msg.message) return
+
         const from = msg.key.remoteJid
         const isGroup = from.endsWith("@g.us")
 
-        // Extract text safely
         const text =
-            msg.message?.conversation ||
-            msg.message?.extendedTextMessage?.text ||
-            msg.message?.imageMessage?.caption ||
-            msg.message?.videoMessage?.caption ||
+            msg.message.conversation ||
+            msg.message.extendedTextMessage?.text ||
+            msg.message.imageMessage?.caption ||
+            msg.message.videoMessage?.caption ||
             ""
 
         if (!text) return
@@ -22,37 +43,38 @@ module.exports = async (sock, msg) => {
         const args = text.slice(prefix.length).trim().split(/\s+/)
         const commandName = args.shift().toLowerCase()
 
-        // Load commands dynamically
-        const commandPath = path.join(__dirname, "../../commands")
-        const commandFiles = fs.readdirSync(commandPath).filter(f => f.endsWith(".js"))
+        const command = commands.get(commandName)
+        if (!command) return
 
-        for (const file of commandFiles) {
-            const commands = require(path.join(commandPath, file))
-            const commandArray = Array.isArray(commands) ? commands : [commands]
+        // OWNER CHECK
+        if (command.fromWho === true) {
+            const owner = process.env.OWNER_NUMBER + "@s.whatsapp.net"
+            const sender = msg.key.participant || msg.key.remoteJid
 
-            for (const command of commandArray) {
-                if (command.caller === commandName) {
-
-                    // Owner-only check
-                    if (command.fromWho) {
-                        const owner = process.env.OWNER_NUMBER + "@s.whatsapp.net"
-                        if (msg.key.participant !== owner && msg.key.remoteJid !== owner) {
-                            await sock.sendMessage(from, { text: "❌ This command is owner-only." }, { quoted: msg })
-                            return
-                        }
-                    }
-
-                    // React emoji if set
-                    if (command.react) {
-                        await sock.sendMessage(from, { react: { text: command.react, key: msg.key } })
-                    }
-
-                    // Execute command
-                    await command.execute(sock, msg, args, { from, isGroup, text, prefix })
-                    return
-                }
+            if (sender !== owner) {
+                return await sock.sendMessage(
+                    from,
+                    { text: "*_❌ you don't have permission fore that Baka_*" },
+                    { quoted: msg }
+                )
             }
         }
+
+        // REACTION
+        if (command.react) {
+            await sock.sendMessage(from, {
+                react: { text: command.react, key: msg.key }
+            })
+        }
+
+        // EXECUTE
+        await command.execute(sock, msg, args, {
+            from,
+            isGroup,
+            prefix,
+            commandName
+        })
+
     } catch (err) {
         console.error("Command handler error:", err)
     }
