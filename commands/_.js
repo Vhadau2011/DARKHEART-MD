@@ -90,7 +90,7 @@ ${formattedCmds}
 
         const resolvedCategories = await Promise.all(categoryList);
         menuMessage += resolvedCategories.join("\n\n");
-        menuMessage += `\n\nTip: Use ${prefix}menu [category] for specific commands`;
+        menuMessage += `\n\nTip: use .support fore true support`;
 
         return client.sendMessage(message.from, { text: menuMessage });
       } catch (err) {
