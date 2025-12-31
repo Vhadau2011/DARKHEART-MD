@@ -76,6 +76,6 @@ module.exports = async (sock, msg) => {
         })
 
     } catch (err) {
-        console.error("Command handler error:", err)
+        console.error("*_Command handler error:_*", err)
     }
 }
