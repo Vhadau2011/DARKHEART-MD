@@ -109,7 +109,7 @@ Broadcast and maintenance commands
 The  **BLUEBOT-MD** channel 
 
 
-[![Join Royal Channel](https://img.shields.io/badge/ROYAL%20CHANNEL-JOIN-black?style=for-the-badge&logo=whatsapp)](https://whatsapp.com/channel/0029VbBq9Z8GpLHM7lV2Vn2i)
+[![Join Royal Channel](https://img.shields.io/badge/ROYAL%20CHANNEL-JOIN-black?style=for-the-badge&logo=whatsapp)](https://whatsapp.com/channel/0029Vb7EosF9hXFBUaF5PT1E)
 
 
 ---
