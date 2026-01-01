@@ -145,7 +145,7 @@ Local PC (Windows/Linux)
 
 1️⃣ Clone the Repository
 
-git clone https://github.com/Vhada2011/BLUEBOT-MD.git
+git clone https://github.com/Vhadau2011/BLUEBOT-MD.git
 cd BLUEBOT-MD
 
 2️⃣ Install Dependencies
