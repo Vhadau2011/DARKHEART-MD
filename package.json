@@ -9,9 +9,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Vhadau2011/DARKHEART-MD.git"
+    "url": "https://github.com/Vhadau2011/BLUEBOT-MD-MD.git"
   },
-  "author": "Mudau Thendo",
+  "author": "mudau_t",
   "license": "MIT",
   "dependencies": {
     "@whiskeysockets/baileys": "^5.0.2",
