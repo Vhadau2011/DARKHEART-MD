@@ -1,36 +1,12 @@
 require('dotenv').config();
-const Baileys = require('@whiskeysockets/baileys');
 const {
     default: makeWASocket,
     useMultiFileAuthState,
     DisconnectReason,
     fetchLatestBaileysVersion,
-    jidDecode
-} = Baileys;
-
-// Robust import for makeInMemoryStore
-let makeInMemoryStore;
-try {
-    // Try standard export
-    makeInMemoryStore = Baileys.makeInMemoryStore;
-    if (!makeInMemoryStore) {
-        // Try direct lib import
-        makeInMemoryStore = require('@whiskeysockets/baileys/lib/Store').makeInMemoryStore;
-    }
-} catch (e) {
-    try {
-        // Try alternative export
-        makeInMemoryStore = require('@whiskeysockets/baileys').makeInMemoryStore;
-    } catch (e2) {
-        console.error('Failed to load makeInMemoryStore:', e2);
-    }
-}
-
-// Final fallback: dummy store to prevent crash
-if (typeof makeInMemoryStore !== 'function') {
-    console.log('Using dummy store fallback');
-    makeInMemoryStore = () => ({ bind: () => {}, readFromFile: () => {}, writeToFile: () => {} });
-}
+    jidDecode,
+    makeInMemoryStore // Correctly importing the store function
+} = require('@whiskeysockets/baileys');
 
 const { Boom } = require('@hapi/boom');
 const P = require('pino');
@@ -44,8 +20,10 @@ const ownerNumber = process.env.OWNER_NUMBER + '@s.whatsapp.net';
 const mods = (process.env.MODS || '').split(',').map(v => v.trim() + '@s.whatsapp.net');
 const botName = process.env.BOT_NAME || 'BLUEBOT-MD';
 
-// Store for managing data in memory
-const store = makeInMemoryStore({ logger: P().child({ level: 'silent', stream: 'store' }) });
+// Store for managing data in memory - Fixed the initialization
+const store = makeInMemoryStore({ 
+    logger: P().child({ level: 'silent', stream: 'store' }) 
+});
 
 // Command Handler Setup
 const commands = new Map();
@@ -57,9 +35,12 @@ function loadCommands() {
         if (fs.existsSync(commandPath)) {
             const files = fs.readdirSync(commandPath).filter(file => file.endsWith('.js'));
             for (const file of files) {
-                const command = require(path.join(commandPath, file));
-                command.category = category;
-                commands.set(command.name, command);
+                try {
+                    const command = require(path.join(commandPath, file));
+                    commands.set(command.name, command);
+                } catch (e) {
+                    console.error(`Failed to load command ${file}:`, e.message);
+                }
             }
         }
     });
@@ -68,7 +49,14 @@ function loadCommands() {
 
 async function startBot() {
     const sessionName = process.env.SESSION_ID || 'default-session';
-    const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'sessions', sessionName));
+    const sessionPath = path.join(__dirname, 'sessions', sessionName);
+    
+    // Ensure sessions directory exists
+    if (!fs.existsSync(sessionPath)) {
+        fs.mkdirSync(sessionPath, { recursive: true });
+    }
+
+    const { state, saveCreds } = await useMultiFileAuthState(sessionPath);
     const { version } = await fetchLatestBaileysVersion();
 
     const sock = makeWASocket({
@@ -79,6 +67,7 @@ async function startBot() {
         browser: [botName, 'Chrome', '1.0.0']
     });
 
+    // Bind the store to the socket events
     if (store && typeof store.bind === 'function') {
         store.bind(sock.ev);
     }
@@ -92,7 +81,7 @@ async function startBot() {
         }
         if (connection === 'close') {
             const shouldReconnect = (lastDisconnect.error instanceof Boom)?.output?.statusCode !== DisconnectReason.loggedOut;
-            console.log('Connection closed due to ', lastDisconnect.error, ', reconnecting ', shouldReconnect);
+            console.log('Connection closed due to ', lastDisconnect.error?.message || 'unknown error', ', reconnecting ', shouldReconnect);
             if (shouldReconnect) startBot();
         } else if (connection === 'open') {
             console.log(`${botName} is now online!`);
@@ -138,3 +127,4 @@ async function startBot() {
 
 loadCommands();
 startBot();
+ 
