@@ -28,7 +28,8 @@ BLUEBOT-MD/
 │   ├── Group/      # General group management commands
 │   ├── MODS/       # Commands for Moderators (same power as Owner, but not full)
 │   ├── Owner/      # Commands exclusive to the bot owner
-│   └── Users/      # Commands available to all users
+│   ├── Users/      # Commands available to all users
+│   └── general/    # General purpose commands (Menu, Help, etc.)
 ├── sessions/       # Stores WhatsApp session data for multi-session support
 ├── index.js        # Main bot logic and command loader
 ├── .env.example    # Template for configuration
@@ -61,6 +62,7 @@ BLUEBOT-MD/
     | `OWNER_NAME` | The name of the bot owner | `mudau_t` |
     | `PREFIX` | The command prefix (e.g., `!`, `.`, `#`) | `!` |
     | `MODS` | Comma-separated list of moderator numbers (no +) | `27987654321,27111222333` |
+| `MENU_IMAGE` | URL of the image to display on the menu | `https://example.com/image.jpg` |
 
 4.  **Start the bot:**
     \`\`\`bash

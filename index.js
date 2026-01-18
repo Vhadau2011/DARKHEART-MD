@@ -26,7 +26,7 @@ const store = makeInMemoryStore({ logger: P().child({ level: 'silent', stream: '
 const commands = new Map();
 
 function loadCommands() {
-    const categories = ['Owner', 'Admin', 'Users', 'Dev', 'Fun', 'Group', 'MODS'];
+    const categories = ['Owner', 'Admin', 'Users', 'Dev', 'Fun', 'Group', 'MODS', 'general'];
     categories.forEach(category => {
         const commandPath = path.join(__dirname, 'commands', category);
         if (fs.existsSync(commandPath)) {
