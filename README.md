@@ -26,10 +26,13 @@ BLUEBOT-MD/
 │   ├── Dev/        # Commands for bot developers (cannot be changed)
 │   ├── Fun/        # Fun and entertainment commands
 │   ├── Group/      # General group management commands
-│   ├── MODS/       # Commands for Moderators (same power as Owner, but not full)
-│   ├── Owner/      # Commands exclusive to the bot owner
-│   ├── Users/      # Commands available to all users
-│   └── general/    # General purpose commands (Menu, Help, etc.)
+│   ├── Admin/      # 50+ Group Admin commands
+│   ├── Dev/        # 50+ Developer commands (Protected)
+│   ├── Fun/        # 50+ Entertainment commands
+│   ├── Group/      # 50+ Group Security (Antilink, Antibot, etc.)
+│   ├── MODS/       # 50+ Moderator commands (including advanced .ban)
+│   ├── Owner/      # 30+ Exclusive Owner commands
+│   └── general/    # 70+ Public commands (replacing Users category)
 ├── sessions/       # Stores WhatsApp session data for multi-session support
 ├── index.js        # Main bot logic and command loader
 ├── .env.example    # Template for configuration
