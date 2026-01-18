@@ -1,25 +1,28 @@
 {
   "name": "bluebot-md",
   "version": "1.0.0",
-  "description": "BLUEBOT-MD WhatsApp Multi-Device Bot",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Vhadau2011/BLUEBOT-MD-MD.git"
+    "url": "git+https://github.com/Vhadau2011/BLUEBOT-MD.git"
   },
-  "author": "mudau_t",
-  "license": "MIT",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vhadau2011/BLUEBOT-MD/issues"
+  },
+  "homepage": "https://github.com/Vhadau2011/BLUEBOT-MD#readme",
+  "description": "",
   "dependencies": {
-    "@whiskeysockets/baileys": "^5.0.2",
-    "dotenv": "^16.3.1",
-    "pino": "^8.16.0",
-    "fs-extra": "^11.1.1"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.2"
+    "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
+    "fs-extra": "^11.3.3",
+    "pino": "^10.2.0",
+    "qrcode-terminal": "^0.12.0"
   }
 }

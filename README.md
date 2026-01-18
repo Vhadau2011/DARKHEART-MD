@@ -1,333 +1,111 @@
----
+# BLUEBOT-MD - Multi-Session WhatsApp Bot
+
+**Author/Developer:** mudau_t
+
+This is a powerful, multi-session WhatsApp bot built with Node.js and the Baileys library. It features a robust command handler structure, dynamic session management, and configuration via a `.env` file.
+
+## ⚠️ Modification Prohibition
+
+**The Software and its source code are provided "as is" and may not be modified, altered, or adapted in any way without the express written permission of the copyright holder, mudau_t.** Please refer to the `LICENSE` file for full details.
+
+## Features
+
+*   **Multi-Session Support:** Easily run multiple WhatsApp accounts by changing the `SESSION_ID` in the `.env` file. Session data is stored in the `sessions/` directory.
+*   **Command Handler:** Simple and scalable command structure organized by user roles.
+*   **Environment Configuration:** All sensitive and customizable settings are managed via a `.env` file.
+*   **Role-Based Commands:** Commands are categorized into 7 distinct directories for clear permission management.
+
+## Project Structure
+
+The project is organized to be clean and easy to navigate:
+
+```
+BLUEBOT-MD/
+├── commands/
+│   ├── Admin/      # Commands for group administrators
+│   ├── Dev/        # Commands for bot developers (cannot be changed)
+│   ├── Fun/        # Fun and entertainment commands
+│   ├── Group/      # General group management commands
+│   ├── MODS/       # Commands for Moderators (same power as Owner, but not full)
+│   ├── Owner/      # Commands exclusive to the bot owner
+│   └── Users/      # Commands available to all users
+├── sessions/       # Stores WhatsApp session data for multi-session support
+├── index.js        # Main bot logic and command loader
+├── .env.example    # Template for configuration
+├── package.json    # Project dependencies and scripts
+└── LICENSE         # License file with modification prohibition
+```
+
+## Installation and Setup
+
+1.  **Clone the repository:**
+    \`\`\`bash
+    git clone https://github.com/Vhadau2011/BLUEBOT-MD.git
+    cd BLUEBOT-MD
+    \`\`\`
+
+2.  **Install dependencies:**
+    \`\`\`bash
+    npm install
+    \`\`\`
+
+3.  **Configure the environment:**
+    Create a file named `.env` in the root directory and copy the contents of `.env.example` into it.
+
+    **`.env` Configuration:**
+    | Variable | Description | Example |
+    | :--- | :--- | :--- |
+    | `OWNER_NUMBER` | Your WhatsApp number (with country code, no +) | `27123456789` |
+    | `SESSION_ID` | Unique name for this session (e.g., `main-bot`) | `main-bot` |
+    | `BOT_NAME` | The name of your bot | `BLUEBOT-MD` |
+    | `OWNER_NAME` | The name of the bot owner | `mudau_t` |
+    | `PREFIX` | The command prefix (e.g., `!`, `.`, `#`) | `!` |
+    | `MODS` | Comma-separated list of moderator numbers (no +) | `27987654321,27111222333` |
+
+4.  **Start the bot:**
+    \`\`\`bash
+    node index.js
+    \`\`\`
+    A QR code will appear in the terminal. Scan it with your WhatsApp mobile app to link the device.
+
+## Command Handler Explained
+
+The `index.js` file automatically loads all `.js` files from the subdirectories within the `commands/` folder.
+
+### How to Add a New Command
+
+1.  Choose the appropriate category (e.g., `Users`, `Fun`, `Owner`).
+2.  Create a new file in that directory (e.g., `commands/Fun/dice.js`).
+3.  Export an object with `name`, `description`, and an `execute` function:
+
+    \`\`\`javascript
+    // commands/Fun/dice.js
+    module.exports = {
+        name: 'dice',
+        description: 'Rolls a six-sided die',
+        async execute(sock, msg, args, context) {
+            const result = Math.floor(Math.random() * 6) + 1;
+            await sock.sendMessage(msg.key.remoteJid, { text: \`You rolled a \${result}!\` });
+        }
+    };
+    \`\`\`
+
+### Available Commands (Examples)
+
+| Command | Category | Description |
+| :--- | :--- | :--- |
+| `!ping` | Users | Checks bot response time. |
+| `!eval` | Owner | Executes arbitrary JavaScript code (Owner only). |
+| `!update` | Dev | Pulls the latest version from the official repository and restarts the bot. **(Cannot be changed)** |
+| `!kick` | Admin | Kicks a member from the group (Group only). |
+| `!joke` | Fun | Gets a random joke. |
+| `!tagall` | Group | Tags all members in a group. |
+| `!warn` | MODS | Warns a user. |
 
-## 🤖 BLUEBOT-MD
+## Multi-Session Mechanism
 
-A Powerful, Modular WhatsApp Multi-Device Bot
+The bot uses the `useMultiFileAuthState` function from Baileys.
 
-
----
-
-## 📌 Overview
-
-**BLUEBOT-MD** is a modern, feature-rich WhatsApp Multi-Device (MD) bot built using the Baileys library.
-It is designed to be fast, modular, and scalable, making it suitable for personal use, communities, and advanced bot developers.
-
-This project focuses on:
-
-Plugin-based command handling
-
-Clean command structure
-
-Easy modification and expansion
-
-Support for sessions generated via external session generators
-
-Stability on panels, VPS, and Termux environments
-
-
-BLUEBOT-MD is ideal for users who want full control over their bot while keeping the system simple and efficient.
-
-
----
-
-## 👑 Author & Credits
-
-Main Developer: **mudau_t**
-
-Real Name: **Mudau Thendo**
-
-Project Name: **BLUEBOT-MD**
-
-
-> This repository was built, structured, and maintained by **mudau_t (Mudau Thendo)**.
-Respect the author’s work and license when modifying or redistributing.
-
-
-
-
----
-
-## 🚀 Features
-
-🔹 Core Features
-
-WhatsApp Multi-Device support
-
-Stable connection handling
-
-Fast startup and low memory usage
-
-Clean message parsing
-
-Group & private chat support
-
-
-🔹 Command System
-
-Prefix-based commands
-
-Plugin-based architecture
-
-Easy command registration
-
-Owner-only, admin-only, and public commands
-
-Group moderation commands
-
-
-🔹 Plugin System
-
-Drop-in plugin support
-
-Independent command files
-
-Easy to enable or disable plugins
-
-Compatible with GitHub & GitLab plugin repositories
-
-
-🔹 Admin & Owner Tools
-
-Owner number authentication
-
-Bot self-management commands
-
-Group admin utilities
-
-Broadcast and maintenance commands
-
-
-
----
-
-## ARE OFFICIAL SUPPORT 
-
- the  **BLUEBOT-MD** community
-
-[![Join offical community](https://img.shields.io/badge/ROYAL%20COMMUNITY-JOIN-blue?style=for-the-badge&logo=whatsapp)](https://chat.whatsapp.com/EJjjbFxlRx0KIpDwpzpRD1)
-
-The  **BLUEBOT-MD** channel 
-
-
-[![Join Royal Channel](https://img.shields.io/badge/ROYAL%20CHANNEL-JOIN-black?style=for-the-badge&logo=whatsapp)](https://whatsapp.com/channel/0029Vb7EosF9hXFBUaF5PT1E)
-
-
----
-
-## ⚙️ Requirements
-
-Before installing, make sure you have:
-
-Node.js v18 or higher
-
-npm or yarn
-
-A stable internet connection
-
-A WhatsApp account for pairing
-
-
-Supported platforms:
-
-Linux VPS
-
-Hosting panels
-
-Termux (Android)
-
-Local PC (Windows/Linux)
-
-
-
----
-
-## 📥 Installation
-
-1️⃣ Clone the Repository
-
-git clone https://github.com/Vhadau2011/BLUEBOT-MD.git
-cd BLUEBOT-MD
-
-2️⃣ Install Dependencies
-
-npm install
-
-3️⃣ Configure the Bot
-
-Edit config.js and set:
-
-Owner number
-
-Bot name
-
-Prefix
-
-Mode (public / private)
-
-
-4️⃣ Add Session
-
-You can:
-
-Generate a session using a session generator website
-
-Upload the session file into the session/ folder
-
-
-5️⃣ Start the Bot
-
-npm start
-
-
-| Feature             | Description                                                  |
-| ------------------- | ------------------------------------------------------------ |
-| 🎛️ **Multi-device** | Use the same bot on several devices simultaneously           |
-| ⚡ **Performance**  | Optimized response time thanks to a lightweight architecture |
-| 🧩 **Modular**      | Enable/disable modules as needed                             |
-
----
-
-## 🔐 Session Support
-
-**BLUEBOT-MD** supports external session generation, meaning:
-
-Users can generate sessions from supported session websites
-
-Upload sessions directly to panels or servers
-
-Start the bot without scanning QR each time
-
-
-This makes the bot panel-friendly and scalable.
-
-
----
-
-## 🧠 Customization
-
-You can easily:
-
-Change bot replies
-
-Add new commands via plugins
-
-Modify existing plugins
-
-Change themes, menus, and styles
-
-Add AI, games, or API-based commands
-
-
-Plugins are written to be simple and beginner-friendly, while still powerful for advanced users.
-
-
----
-
-## 🧪 Stability & Performance
-
-**BLUEBOT-MD** is optimized for:
-
-Long uptime
-
-Minimal crashes
-
-Clean reconnection handling
-
-Reduced message lag
-
-
-It is suitable for large groups and communities.
-
-
----
-
-## ⚠️ Disclaimer
-
-This project is not affiliated with WhatsApp Inc.
-
-Use responsibly and follow WhatsApp’s Terms of Service
-
-The author is not responsible for bans caused by misuse
-
-Do not use for spam or malicious activity
-
-
-
----
-
-## 📜 License
-
-This project is released under an open-source license.
-You are allowed to:
-
-Modify
-
-Fork
-
-Improve
-
-
-You are required to:
-
-Keep credits to **mudau_t (Mudau Thendo)**
-
-Respect the original license
-
-Not claim the project as entirely your own
-
-
-
----
-
-## 🤝 Contributions
-
-Contributions are welcome:
-
-Bug fixes
-
-New plugins
-
-Performance improvements
-
-Documentation updates
-
-
-Fork the repository and submit a pull request.
-
-
----
-
-## 💙 Final Note
-
-**BLUEBOT-MD** was built with passion, learning, and dedication.
-If you use or modify this bot, respect the effort behind it.
-
-> Built by **mudau_t (Mudau Thendo)**
-Project: **BLUEBOT-MD**
-
-
-
-
----
-
-**are logo fore now**
-
-<p align="center">
-  <img src="https://files.catbox.moe/xxe1ar.jpg" alt="BLUEBOT-MD Banner" width="100%">
-</p>  
-
-<!-- Decorative Divider -->
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=007bff&height=90&section=footer" style="margin-top:-30px;" />
-  <br>
-  <span style="font-size:10px;">🔴</span>
-  <br/>
-  <sub>
-    Styled by <a href="https://github.com/AiOfLautech">Vhadau2011</a> | Powered by ☕ & ❤️
-  </sub>
-</div>
-
-<video controls width="600" autoplay muted loop>
-  <source src="https://cdn.kord.live/serve/1FhrzdsT6lSc.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+1.  The `SESSION_ID` variable from the `.env` file is used to create a unique folder inside the `sessions/` directory (e.g., `sessions/main-bot`).
+2.  This folder stores all the necessary authentication files for that specific WhatsApp account.
+3.  To run a second session, simply create a new `.env` file (or modify the existing one) with a different `SESSION_ID` (e.g., `SESSION_ID=second-bot`) and run a new instance of the bot. The new instance will create a new folder and require a new QR scan.
