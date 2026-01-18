@@ -1,13 +1,16 @@
 require('dotenv').config();
+const Baileys = require('@whiskeysockets/baileys');
 const {
     default: makeWASocket,
     useMultiFileAuthState,
     DisconnectReason,
     fetchLatestBaileysVersion,
-    // makeInMemoryStore,
     jidDecode
-} = require('@whiskeysockets/baileys');
-const { makeInMemoryStore } = require('@whiskeysockets/baileys/lib/Store');
+} = Baileys;
+
+// Robust import for makeInMemoryStore
+const makeInMemoryStore = Baileys.makeInMemoryStore || require('@whiskeysockets/baileys/lib/Store').makeInMemoryStore;
+
 const { Boom } = require('@hapi/boom');
 const P = require('pino');
 const fs = require('fs');
@@ -43,8 +46,6 @@ function loadCommands() {
 }
 
 async function startBot() {
-    // Multi-session support: Session info is stored in 'sessions' folder
-    // You can change the folder name to process.env.SESSION_ID for dynamic sessions
     const sessionName = process.env.SESSION_ID || 'default-session';
     const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'sessions', sessionName));
     const { version } = await fetchLatestBaileysVersion();
@@ -95,10 +96,9 @@ async function startBot() {
 
         if (!command) return;
 
-        // Permission Checks
         const isOwner = from === ownerNumber || msg.key.participant === ownerNumber;
         const isMod = mods.includes(from) || mods.includes(msg.key.participant) || isOwner;
-        const isDev = msg.key.participant?.includes('mudau_t') || from.includes('mudau_t'); // Custom dev check
+        const isDev = msg.key.participant?.includes('mudau_t') || from.includes('mudau_t');
 
         if (command.category === 'Owner' && !isOwner) return sock.sendMessage(from, { text: 'This command is for Owner only.' });
         if (command.category === 'MODS' && !isMod) return sock.sendMessage(from, { text: 'This command is for Mods/Owner only.' });
