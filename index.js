@@ -9,7 +9,18 @@ const {
 } = Baileys;
 
 // Robust import for makeInMemoryStore
-const makeInMemoryStore = Baileys.makeInMemoryStore || require('@whiskeysockets/baileys/lib/Store').makeInMemoryStore;
+let makeInMemoryStore;
+try {
+    makeInMemoryStore = Baileys.makeInMemoryStore || require('@whiskeysockets/baileys/lib/Store').makeInMemoryStore;
+} catch (e) {
+    try {
+        makeInMemoryStore = require('@whiskeysockets/baileys').makeInMemoryStore;
+    } catch (e2) {
+        console.error('Failed to load makeInMemoryStore:', e2);
+        // Fallback to a dummy store if it absolutely cannot be loaded
+        makeInMemoryStore = () => ({ bind: () => {} });
+    }
+}
 
 const { Boom } = require('@hapi/boom');
 const P = require('pino');
@@ -58,7 +69,7 @@ async function startBot() {
         browser: [botName, 'Chrome', '1.0.0']
     });
 
-    store.bind(sock.ev);
+    if (store && store.bind) store.bind(sock.ev);
 
     sock.ev.on('creds.update', saveCreds);
 
