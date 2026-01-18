@@ -1,8 +1,11 @@
 module.exports = {
     name: 'ping',
-    description: 'Check latency',
+    description: 'Functional general command: ping',
     category: 'general',
     async execute(sock, msg, args) {
-        await sock.sendMessage(msg.key.remoteJid, { text: 'This is the ping command in the general category. (Placeholder)' });
+        const start = Date.now();
+        await sock.sendMessage(msg.key.remoteJid, { text: 'Testing speed...' });
+        const end = Date.now();
+        await sock.sendMessage(msg.key.remoteJid, { text: `Latency: ${end - start}ms` });
     }
 };

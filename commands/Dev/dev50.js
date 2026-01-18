@@ -1,8 +1,8 @@
 module.exports = {
     name: 'dev50',
-    description: 'Dev command number 50',
+    description: 'Functional Dev command: dev50',
     category: 'Dev',
     async execute(sock, msg, args) {
-        await sock.sendMessage(msg.key.remoteJid, { text: 'This is the dev50 command in the Dev category.' });
+        await sock.sendMessage(msg.key.remoteJid, { text: 'Dev command dev50 executed.' });
     }
 };

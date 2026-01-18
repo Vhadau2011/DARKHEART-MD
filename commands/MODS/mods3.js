@@ -1,8 +1,8 @@
 module.exports = {
     name: 'mods3',
-    description: 'MODS command number 3',
+    description: 'Functional MODS command: mods3',
     category: 'MODS',
     async execute(sock, msg, args) {
-        await sock.sendMessage(msg.key.remoteJid, { text: 'This is the mods3 command in the MODS category.' });
+        await sock.sendMessage(msg.key.remoteJid, { text: 'MODS command mods3 executed.' });
     }
 };

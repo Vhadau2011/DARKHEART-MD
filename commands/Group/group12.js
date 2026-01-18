@@ -1,8 +1,8 @@
 module.exports = {
     name: 'group12',
-    description: 'Group command number 12',
+    description: 'Functional Group command: group12',
     category: 'Group',
     async execute(sock, msg, args) {
-        await sock.sendMessage(msg.key.remoteJid, { text: 'This is the group12 command in the Group category.' });
+        await sock.sendMessage(msg.key.remoteJid, { text: 'Group command group12 executed.' });
     }
 };

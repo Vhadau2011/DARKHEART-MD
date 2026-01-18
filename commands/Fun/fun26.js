@@ -1,8 +1,10 @@
 module.exports = {
     name: 'fun26',
-    description: 'Fun command number 26',
+    description: 'Functional Fun command: fun26',
     category: 'Fun',
     async execute(sock, msg, args) {
-        await sock.sendMessage(msg.key.remoteJid, { text: 'This is the fun26 command in the Fun category.' });
+        const responses = ['Yes', 'No', 'Maybe', 'Definitely', 'Never', 'Ask again later'];
+        const result = responses[Math.floor(Math.random() * responses.length)];
+        await sock.sendMessage(msg.key.remoteJid, { text: `Fun Result for fun26: ${result}` });
     }
 };

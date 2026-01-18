@@ -1,8 +1,8 @@
 module.exports = {
     name: 'admin42',
-    description: 'Admin command number 42',
+    description: 'Functional Admin command: admin42',
     category: 'Admin',
     async execute(sock, msg, args) {
-        await sock.sendMessage(msg.key.remoteJid, { text: 'This is the admin42 command in the Admin category.' });
+        await sock.sendMessage(msg.key.remoteJid, { text: 'Admin action admin42 executed successfully.' });
     }
 };

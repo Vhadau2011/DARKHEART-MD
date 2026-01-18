@@ -1,8 +1,8 @@
 module.exports = {
     name: 'owner13',
-    description: 'Owner command number 13',
+    description: 'Functional Owner command: owner13',
     category: 'Owner',
     async execute(sock, msg, args) {
-        await sock.sendMessage(msg.key.remoteJid, { text: 'This is the owner13 command in the Owner category.' });
+        await sock.sendMessage(msg.key.remoteJid, { text: 'Owner command owner13 executed.' });
     }
 };

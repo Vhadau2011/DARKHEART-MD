@@ -1,8 +1,12 @@
 module.exports = {
     name: 'promote',
-    description: 'Promote a member to admin',
+    description: 'Functional Admin command: promote',
     category: 'Admin',
     async execute(sock, msg, args) {
-        await sock.sendMessage(msg.key.remoteJid, { text: 'This is the promote command in the Admin category. (Placeholder)' });
+        const from = msg.key.remoteJid;
+        const target = msg.message.extendedTextMessage?.contextInfo?.mentionedJid?.[0];
+        if (!target) return sock.sendMessage(from, { text: 'Tag someone to promote.' });
+        await sock.groupParticipantsUpdate(from, [target], 'promote');
+        await sock.sendMessage(from, { text: 'User promoted to admin.' });
     }
 };

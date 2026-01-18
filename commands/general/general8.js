@@ -1,8 +1,8 @@
 module.exports = {
     name: 'general8',
-    description: 'general command number 8',
+    description: 'Functional general command: general8',
     category: 'general',
     async execute(sock, msg, args) {
-        await sock.sendMessage(msg.key.remoteJid, { text: 'This is the general8 command in the general category.' });
+        await sock.sendMessage(msg.key.remoteJid, { text: 'General command general8 is working.' });
     }
 };
