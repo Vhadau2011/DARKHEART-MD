@@ -4,9 +4,10 @@ const {
     useMultiFileAuthState,
     DisconnectReason,
     fetchLatestBaileysVersion,
-    makeInMemoryStore,
+    // makeInMemoryStore,
     jidDecode
 } = require('@whiskeysockets/baileys');
+const { makeInMemoryStore } = require('@whiskeysockets/baileys/lib/Store');
 const { Boom } = require('@hapi/boom');
 const P = require('pino');
 const fs = require('fs');
